@@ -14,6 +14,7 @@ void setup() {
         AutoPins.loop();
         smartDelay(50);
     }
+    expansion.setSPI(sck_pin, miso_pin, mosi_pin);
     expansion.begin();
     // thread_setup(1000);
     smartDelay(1000);

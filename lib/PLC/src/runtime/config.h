@@ -7,16 +7,17 @@ bool& LED = AutoPins.attach(PC13, OUTPUT, INVERTED);
 // EXPANSION
 #include <LSR32IO.h>
 
-#define cs_pin PA15
+#define cs_pin PB5
 
-#define sck_pin PA5
-#define miso_pin PA6
-#define mosi_pin PA7
+#define sck_pin PB13
+#define miso_pin PB14
+#define mosi_pin PB15
 
-#define latch_pin PB5
-#define en_pin PB4
+#define latch_pin PB4
+#define en_pin PB3
+#define rst_pin PA15
 
-LSR32IO expansion(cs_pin, latch_pin, en_pin);
+LSR32IO expansion(cs_pin, latch_pin, en_pin, rst_pin);
 
 #define BUTTON_DEBOUNCE_CYCLES 30
 
@@ -70,20 +71,20 @@ bool& SW_A_STOP = expansion.attachInputBit(0, BUTTON_DEBOUNCE_CYCLES, INVERTED);
 bool& SW_A_START = expansion.attachInputBit(1, BUTTON_DEBOUNCE_CYCLES);  // LSR32IO input 1
 bool& SW_M_AUTO = expansion.attachInputBit(2, BUTTON_DEBOUNCE_CYCLES);   // LSR32IO input 2
 bool& SW_M_ROCNO = expansion.attachInputBit(3, BUTTON_DEBOUNCE_CYCLES);  // LSR32IO input 3
-bool& SW_1_M1 = expansion.attachInputBit(4, BUTTON_DEBOUNCE_CYCLES);  // LSR32IO input 4
-bool& SW_2_C = expansion.attachInputBit(5, BUTTON_DEBOUNCE_CYCLES);  // LSR32IO input 5
-bool& SW_3_M2 = expansion.attachInputBit(6, BUTTON_DEBOUNCE_CYCLES);  // LSR32IO input 6
-bool& SW_4_M3 = expansion.attachInputBit(7, BUTTON_DEBOUNCE_CYCLES);  // LSR32IO input 7
+bool& SW_1_M1 = expansion.attachInputBit(4, BUTTON_DEBOUNCE_CYCLES);     // LSR32IO input 4
+bool& SW_2_C = expansion.attachInputBit(5, BUTTON_DEBOUNCE_CYCLES);      // LSR32IO input 5
+bool& SW_3_M2 = expansion.attachInputBit(6, BUTTON_DEBOUNCE_CYCLES);     // LSR32IO input 6
+bool& SW_4_M3 = expansion.attachInputBit(7, BUTTON_DEBOUNCE_CYCLES);     // LSR32IO input 7
 
 // OUTPUTS
-bool& OUT_HOLD = expansion.attachOutputBit(0);       // LSR32IO output 0
-bool& MOTOR_1 = expansion.attachOutputBit(1);        // LSR32IO output 1
-bool& MOTOR_2 = expansion.attachOutputBit(2);        // LSR32IO output 2
-bool& MOTOR_3 = expansion.attachOutputBit(3);        // LSR32IO output 3
-
-bool& LED_AUTO = expansion.attachOutputBit(8);       // LSR32IO output 8
-bool& LED_1_M1 = expansion.attachOutputBit(9);       // LSR32IO output 9
-bool& LED_2_C = expansion.attachOutputBit(10);       // LSR32IO output 10
+bool& OUT_HOLD = expansion.attachOutputBit(0);        // LSR32IO output 0
+bool& MOTOR_1 = expansion.attachOutputBit(1);         // LSR32IO output 1
+bool& MOTOR_2 = expansion.attachOutputBit(2);         // LSR32IO output 2
+bool& MOTOR_3 = expansion.attachOutputBit(3);         // LSR32IO output 3
+ 
+bool& LED_AUTO = expansion.attachOutputBit(8);        // LSR32IO output 8
+bool& LED_1_M1 = expansion.attachOutputBit(9);        // LSR32IO output 9
+bool& LED_2_C = expansion.attachOutputBit(10);        // LSR32IO output 10
 bool& LED_3_M2 = expansion.attachOutputBit(11);       // LSR32IO output 11
 bool& LED_4_M3 = expansion.attachOutputBit(12);       // LSR32IO output 12
 
