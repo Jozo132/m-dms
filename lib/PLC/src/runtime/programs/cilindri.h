@@ -84,6 +84,7 @@ struct cilindri_t : _vovk_plc_block_t {
             switch (flow.phase) {
                 case FAZA_0_PRICAKAJ_POGOJE: {
                     if (on && !MOTOR_1 && (P2 || ROCNO) && !P3) {
+                        last_idle_time = t;
                         safe = false;
                         if (deska_kratka)
                             naprej(1);

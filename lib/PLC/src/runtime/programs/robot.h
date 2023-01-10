@@ -2,7 +2,7 @@
 #include "../config.h"
 #include "merjenje_izhodno.h"
 
-struct robot_t : _vovk_plc_block_t {
+struct robot_t: _vovk_plc_block_t {
     void izhodisce() {
         if (running) Serial.printf("[robot] Konec\n");
         resetRobotStanja();
@@ -53,6 +53,7 @@ struct robot_t : _vovk_plc_block_t {
             switch (flow.phase) {
                 case FAZA_0_PRICAKAJ_POGOJE: {
                     if (on && AUTO && P6 && !MOTOR_3 && !RI_WORKING) {
+                        last_idle_time = t;
                         safe = false;
                         flow.next();
                     }
@@ -69,6 +70,7 @@ struct robot_t : _vovk_plc_block_t {
                 }
                 case FAZA_2_POCAKAJ_ROBOTA: {
                     if (!RI_WORKING) {
+                        // last_idle_time = t;
                         P6 = false;
                         resetRobotStanja();
                         Serial.printf("[robot] Robot pobral\n");

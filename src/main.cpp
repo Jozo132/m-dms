@@ -1,7 +1,7 @@
 #include <PLC.h>
 
 void setup() {
-    IWatchdog.begin(10000);
+    IWatchdog.begin(30000);
     IWatchdog.reload();
     Serial.begin(115200);
     LED = OFF;
@@ -21,9 +21,12 @@ void setup() {
     IWatchdog.reload();
     smartDelay(1000);
     plc.setup();
+    IWatchdog.reload();
     validateTime();
     P_1s_timer.reset();
+    P_500ms_timer.reset();
     P_100ms_timer.reset();
+    IWatchdog.reload();
 }
 
 
@@ -41,6 +44,7 @@ void loop() {
     cycle_count++;
     validateTime();
     P_1s = P_1s_timer.check();
+    P_500ms = P_500ms_timer.check();
     P_100ms = P_100ms_timer.check();
     AutoPins.loop();
     expansion.loop();

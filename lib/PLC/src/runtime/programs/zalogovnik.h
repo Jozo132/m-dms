@@ -1,7 +1,7 @@
 #pragma once
 #include "../config.h"
 
-struct zalogovnik_t : _vovk_plc_block_t {
+struct zalogovnik_t: _vovk_plc_block_t {
     // // EXPANSION IZHODI
     // bool& ZASUK = expansion.attachOutputBit(6);         // Q-6
     // bool& BREMZA = expansion.attachOutputBit(7);        // Q-7
@@ -65,9 +65,9 @@ struct zalogovnik_t : _vovk_plc_block_t {
         }
         if (!enabled) return;
 
-        bool on = AUTO || ROCNO || stopping;
+        bool on = AUTO || ROCNO || stopping || SERVIS;
         bool work = running && on;
-        bool push_is_safe = (!P4 && stanjeZalogovnika.st_desk > 0) || stanjeZalogovnika.safeToMoveOne();
+        bool push_is_safe = (!P4 && stanjeZalogovnika.st_desk > 0) || stanjeZalogovnika.safeToMoveOne() || (SERVIS && SERVIS_M2);
         if (work) {
             switch (flow.phase) {
                 case FAZA_0_PRICAKAJ_POGOJE: {
@@ -120,7 +120,8 @@ struct zalogovnik_t : _vovk_plc_block_t {
                 case FAZA_4_CHECK: {
                     bool single_move = P4 && stanjeZalogovnika.safeToMoveOne();
                     bool prisotna_deska = stanjeZalogovnika.move();
-                    if (prisotna_deska) {
+                    if (prisotna_deska || SERVIS) {
+                        SERVIS_M2 = false;
                         P4 = true;
                         // if (P2) cilindri.run();
                         flow.next();

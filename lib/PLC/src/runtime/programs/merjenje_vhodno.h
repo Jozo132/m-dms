@@ -1,7 +1,7 @@
 #pragma once
 #include "../config.h"
 
-struct merjenje_vhodno_t : _vovk_plc_block_t {
+struct merjenje_vhodno_t: _vovk_plc_block_t {
     double time_zacetek = 0;
     double time_konec = 0;
     double dolzina = 0;
@@ -65,6 +65,7 @@ struct merjenje_vhodno_t : _vovk_plc_block_t {
             switch (flow.phase) {
                 case FAZA_0_PRICAKAJ_POGOJE: {
                     if (on && C1_zadaj && C2_zadaj && !P2) {
+                        last_idle_time = t;
                         safe = false;
                         flow.next();
                     }
@@ -125,6 +126,7 @@ struct merjenje_vhodno_t : _vovk_plc_block_t {
                 }
 
                 case FAZA_7_STATUS_UPDATE: {
+                    // last_idle_time = t;
                     IZPIH = false;
                     deska_kratka = dolzina < DD_DOLGA;
                     P2 = true;

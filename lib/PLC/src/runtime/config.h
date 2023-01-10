@@ -106,7 +106,7 @@ bool& RO_D5 = expansion.attachOutputBit(LETEV_OUT_15);         // Kuka digital s
 bool& RO_AVAILABLE = expansion.attachOutputBit(LETEV_OUT_16);         // Kuka digital signal - Robot ima desko na voljo
 
 bool P1 = false;  // Deska na vhodnem senzorju za merjenje razdalje
-bool P2 = true;  // Deska na mestu za premik na trak
+bool P2 = true;   // Deska na mestu za premik na trak
 bool P3 = true;   // Deska na vhodu traka
 bool P4 = true;   // Deska na spodnjem traku
 bool P5 = false;  // Deska na izhodnem senzorju za merjenje razdalje
@@ -114,7 +114,13 @@ bool P6 = false;  // Deska pripravljena za robota
 
 bool AUTO = false;   // Mode AUTO
 bool ROCNO = false;  // Mode ROCNO
+bool SERVIS = false; // Mode SERVIS
 bool STOP = true;
+
+bool SERVIS_M1 = false; // SW_1_M1 toggles this state       
+bool SERVIS_C = false;  // SW_2_C  toggles this state     
+bool SERVIS_M2 = false; // SW_3_M2 toggles this state       
+bool SERVIS_M3 = false; // SW_4_M3 toggles this state       
 
 #define STEVILO_CIKLOV_ZA_IZPIH 30
 
@@ -130,6 +136,10 @@ bool deska_kratka = false;
 #define DD_KOREKCIJA_DOLZINE_2 -5.0
 
 uint32_t cycle_count = 0;
+
+double cycle_time = 0;
+double last_idle_time = 0;
+double idle_sec = 0;
 
 double spool_hold_time = 1.0;
 

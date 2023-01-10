@@ -2,7 +2,7 @@
 #include "../config.h"
 #include "zalogovnik.h"
 
-struct merjenje_izhodno_t : _vovk_plc_block_t {
+struct merjenje_izhodno_t: _vovk_plc_block_t {
     double time_zacetek = 0;
     double time_konec = 0;
     double trajanje = 0;
@@ -65,6 +65,7 @@ struct merjenje_izhodno_t : _vovk_plc_block_t {
             switch (flow.phase) {
                 case FAZA_0_PRICAKAJ_POGOJE: {
                     if (on && zalogovnik.safe && P4 && !P5 && !P6) {
+                        last_idle_time = t;
                         safe = false;
                         if (AUTO) flow.next();
                         if (ROCNO) {
@@ -157,6 +158,7 @@ struct merjenje_izhodno_t : _vovk_plc_block_t {
                 }
 
                 case FAZA_6_STATUS_UPDATE: {
+                    // last_idle_time = t;
                     safe = true;
                     finished = true;
                     // if (AUTO)
